@@ -43,47 +43,37 @@ size_t	ft_strlen(const char *str)
 
 char	*ft_strjoin(char const *s1, char const *s2)
 {
-	char *new;
-
-	if (s1 && s2)
-	{
-		if (!(new = (char *)malloc(sizeof(char) *
-			(ft_strlen(s1) + ft_strlen(s2) + 1))))
-			return (NULL);
-		ft_strlcpy(new, s1, ft_strlen(s1) + 1);
-		ft_strlcat(new, s2, ft_strlen(s2) + ft_strlen(s1) + 1);
-		return (new);
-	}
-	return (NULL);
-}
-
-size_t	ft_strlcat(char *dst, const char *src, size_t size)
-{
-	size_t	i;
-	size_t	j;
+	char	*new;
+	int		i;
+	int		j;
 
 	i = 0;
 	j = 0;
-	while (dst[i] && i < size)
-		i++;
-	while (src[j] && j + i + 1 < size)
+	if (!s1 || !s2)
+		return (NULL);
+	if (!(new = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1))))
+		return (NULL);
+	while (s1[i])
 	{
-		dst[i + j] = src[j];
+		new[i] = s1[i];
+		i++;
+	}
+	while (s2[j])
+	{
+		new[i] = s2[j];
+		i++;
 		j++;
 	}
-	if (i != size)
-		dst[i + j] = '\0';
-	return (i + ft_strlen(src));
+	new[i] = '\0';
+	return (new);
 }
 
-size_t	ft_strlcpy(char *dst, const char *src, size_t size)
+size_t	ft_strcpy(char *dst, const char *src)
 {
 	unsigned int i;
 
-	if (size <= 0)
-		return (ft_strlen(src));
 	i = 0;
-	while (src[i] && i < (size - 1))
+	while (src[i])
 	{
 		dst[i] = src[i];
 		i++;

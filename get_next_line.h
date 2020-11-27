@@ -6,7 +6,7 @@
 /*   By: nbouhada <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/25 13:00:52 by nbouhada          #+#    #+#             */
-/*   Updated: 2020/11/25 13:00:54 by nbouhada         ###   ########.fr       */
+/*   Updated: 2020/11/26 15:56:37 by nbouhada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # include <fcntl.h>
 
 #ifndef BUFFER_SIZE
-# define BUFFER_SIZE
+# define BUFFER_SIZE 5
 #endif
 
 
@@ -30,7 +30,7 @@ char	*ft_strdup(const char *s);
 size_t	ft_strlen(const char *str);
 char	*ft_strjoin(char const *s1, char const *s2);
 size_t	ft_strlcat(char *dst, const char *src, size_t size);
-size_t	ft_strlcpy(char *dst, const char *src, size_t size);
+size_t	ft_strcpy(char *dst, const char *src);
 void	*ft_memset(void *s, int c, size_t n);
 char    *ft_strnew(size_t size);
 char	*ft_strchr(const char *s, int c);

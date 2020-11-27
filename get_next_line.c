@@ -12,7 +12,7 @@
 
 #include "get_next_line.h"
 
-char	*ft_check_reminder(char *reminder, char **line)
+static char		*ft_check_reminder(char *reminder, char **line)
 {
 	char *ptr_n;
 
@@ -24,7 +24,7 @@ char	*ft_check_reminder(char *reminder, char **line)
 			*ptr_n = '\0';
 			*line = ft_strdup(reminder);
 			ptr_n++;
-			ft_strlcpy(reminder, ptr_n, ft_strlen(ptr_n));
+			ft_strcpy(reminder, ptr_n);
 		}
 		else
 		{
@@ -33,9 +33,7 @@ char	*ft_check_reminder(char *reminder, char **line)
 		}
 	}
 	else
-	{
 		*line = ft_strnew(1);
-	}
 	return (ptr_n);
 }
 
@@ -47,6 +45,8 @@ int		get_next_line(int fd, char **line)
 	static char *reminder;
 	char *tmp;
 
+	if (!line || BUFFER_SIZE < 1 || fd < 0 || (read(fd, buf, 0) < 0))
+		return (-1);
 	ptr_n = ft_check_reminder(reminder, line);
 	while (!ptr_n && (ret = read(fd, buf, BUFFER_SIZE)))
 	{
@@ -58,8 +58,9 @@ int		get_next_line(int fd, char **line)
 			reminder = ft_strdup(ptr_n);
 		}
 		tmp = *line;
-		*line = ft_strjoin(*line, buf);
+		if(!(*line = ft_strjoin(tmp, buf)))
+			return (-1);
 		free(tmp);
 	}
-	return (0);
+	return (ret || ft_strlen(reminder) || ft_strlen(*line) ? 1 : 0);
 }
