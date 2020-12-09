@@ -12,55 +12,74 @@
 
 #include "get_next_line.h"
 
-static char		*ft_check_reminder(char *reminder, char **line)
-{
-	char *ptr_n;
-
-	ptr_n = NULL;
-	if (reminder)
-	{
-		if ((ptr_n = ft_strchr(reminder, '\n')))
-		{
-			*ptr_n = '\0';
-			*line = ft_strdup(reminder);
-			ptr_n++;
-			ft_strcpy(reminder, ptr_n);
-		}
-		else
-		{
-			*line = ft_strdup(reminder);
-			ft_bzero(reminder, ft_strlen(reminder));	
-		}
-	}
-	else
-		*line = ft_strnew(1);
-	return (ptr_n);
-}
-
-int		get_next_line(int fd, char **line)
+char	*read_line(char *str, int fd, int *r)
 {
 	char buf[BUFFER_SIZE + 1];
-	int ret;
-	char *ptr_n;
-	static char *reminder;
 	char *tmp;
 
-	if (!line || BUFFER_SIZE < 1 || fd < 0 || (read(fd, buf, 0) < 0))
-		return (-1);
-	ptr_n = ft_check_reminder(reminder, line);
-	while (!ptr_n && (ret = read(fd, buf, BUFFER_SIZE)))
+	while ((*r = read(fd, &buf, BUFFER_SIZE)) > 0)
 	{
-		buf[ret] = '\0';
-		if ((ptr_n = ft_strchr(buf, '\n')))
+		if (*r == -1)
+			return (str);
+		buf[*r] = 0;
+		if (str)
 		{
-			*ptr_n = '\0';
-			ptr_n++;
-			reminder = ft_strdup(ptr_n);
+			tmp = ft_strjoin(str, buf);
+			free(str);
+			str = ft_strdup(tmp);
+			free(tmp);
 		}
-		tmp = *line;
-		if(!(*line = ft_strjoin(tmp, buf)))
-			return (-1);
+		else
+			str = ft_strdup(buf);
+		if (ft_strchr(buf, '\n'))
+			return (str);
+	}
+	return (str);
+}
+
+char	*get_line(char *str, char **line, int r)
+{
+	char	*tmp;
+	unsigned int i;
+
+	i = 0;
+	while (str[i] && str[i] != '\n')
+		i++;
+	if (i < ft_strlen(str))
+	{
+		*line = ft_substr(str, 0, i);
+		tmp = ft_substr(str, i + 1, ft_strlen(str));
+		free(str);
+		str = ft_strdup(tmp);
 		free(tmp);
 	}
-	return (ret || ft_strlen(reminder) || ft_strlen(*line) ? 1 : 0);
+	else if (r == 0)
+	{
+		*line = str;
+		str = NULL;
+	}
+	return (str);
+}
+
+int				get_next_line(int fd, char **line)
+{
+	static char *str;
+	int			r;
+
+	if (fd < 0 || !line)
+		return (-1);
+	if (BUFFER_SIZE < 1)
+		return (-1);
+	str = read_line(str, fd, &r);
+	if (r == -1)
+		return (-1);
+	if (r <= 0 && !str)
+	{
+		*line = ft_strdup("");
+		return (r);
+	}
+	str = get_line(str, line, r);
+	if (r <= 0 && !str)
+		return(r);
+	return (1);
 }
