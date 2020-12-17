@@ -12,11 +12,11 @@
 
 #include "get_next_line.h"
 
-char		*ft_strdup(const char *s)
+char				*ft_strdup(const char *s)
 {
-	int		len_s;
-	char	*mems;
-	int		i;
+	int				len_s;
+	char			*mems;
+	int				i;
 
 	i = 0;
 	len_s = ft_strlen(s);
@@ -31,9 +31,9 @@ char		*ft_strdup(const char *s)
 	return (mems);
 }
 
-size_t	ft_strlen(const char *str)
+size_t				ft_strlen(const char *str)
 {
-	size_t i;
+	size_t			i;
 
 	i = 0;
 	while (str[i])
@@ -41,11 +41,11 @@ size_t	ft_strlen(const char *str)
 	return (i);
 }
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char				*ft_strjoin(char const *s1, char const *s2)
 {
-	char	*new;
-	int		i;
-	int		j;
+	char			*new;
+	int				i;
+	int				j;
 
 	i = 0;
 	j = 0;
@@ -68,7 +68,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	return (new);
 }
 
-char	*ft_strchr(const char *s, int c)
+char				*ft_strchr(const char *s, int c)
 {
 	while (*s != (char)c)
 	{

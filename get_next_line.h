@@ -20,10 +20,9 @@
 # include <sys/stat.h>
 # include <fcntl.h>
 
-#ifndef BUFFER_SIZE
-# define BUFFER_SIZE 42
-#endif
-
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 42
+# endif
 
 int		get_next_line(int fd, char **line);
 char	*ft_strndup(const char *s, size_t n);
@@ -33,9 +32,9 @@ char	*ft_strjoin(char const *s1, char const *s2);
 size_t	ft_strlcat(char *dst, const char *src, size_t size);
 size_t	ft_strcpy(char *dst, const char *src);
 void	*ft_memset(void *s, int c, size_t n);
-char    *ft_strnew(size_t size);
+char	*ft_strnew(size_t size);
 char	*ft_strchr(const char *s, int c);
 void	ft_bzero(void *s, size_t n);
-char    *ft_substr(char const *s, unsigned int start, size_t len);
+char	*ft_substr(char const *s, unsigned int start, size_t len);
 
 #endif

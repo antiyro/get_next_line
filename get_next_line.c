@@ -12,10 +12,10 @@
 
 #include "get_next_line.h"
 
-char	*read_line(char *str, int fd, int *r)
+char				*read_line(char *str, int fd, int *r)
 {
-	char buf[BUFFER_SIZE + 1];
-	char *tmp;
+	char			buf[BUFFER_SIZE + 1];
+	char			*tmp;
 
 	while ((*r = read(fd, &buf, BUFFER_SIZE)) > 0)
 	{
@@ -37,10 +37,10 @@ char	*read_line(char *str, int fd, int *r)
 	return (str);
 }
 
-char	*get_line(char *str, char **line, int r)
+char				*get_line(char *str, char **line, int r)
 {
-	char	*tmp;
-	unsigned int i;
+	char			*tmp;
+	unsigned int	i;
 
 	i = 0;
 	while (str[i] && str[i] != '\n')
@@ -61,10 +61,10 @@ char	*get_line(char *str, char **line, int r)
 	return (str);
 }
 
-int				get_next_line(int fd, char **line)
+int					get_next_line(int fd, char **line)
 {
-	static char *str;
-	int			r;
+	static char		*str;
+	int				r;
 
 	if (fd < 0 || !line)
 		return (-1);
@@ -80,6 +80,6 @@ int				get_next_line(int fd, char **line)
 	}
 	str = get_line(str, line, r);
 	if (r <= 0 && !str)
-		return(r);
+		return (r);
 	return (1);
 }
